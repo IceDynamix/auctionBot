@@ -13,4 +13,11 @@ module.exports = {
         const input = interaction.options.get("input").value;
         await interaction.reply(input);
     },
+    permissions: [
+        {
+            id: process.env.ADMIN_ROLE_ID,
+            type: "ROLE",
+            permission: true,
+        },
+    ],
 }

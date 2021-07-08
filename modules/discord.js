@@ -20,9 +20,17 @@ async function run() {
 
     client.on("ready", async () => {
         console.log(`Logged in as ${ client.user.tag }!`);
+
         const guild = await client.guilds.fetch(process.env.GUILD_ID);
-        await guild.commands.set(Object.entries(commands).map(([_, c]) => c.data));
-        console.log(`Registered commands ${ Object.entries(commands).map(([name]) => name) }`)
+        const guildCommands = await guild.commands.set(Object.entries(commands).map(([_, c]) => c.data));
+        console.log(`Registered commands ${ Object.entries(commands).map(([name]) => name) }`);
+
+        // Add IDs to commands dict
+        for (const [id, command] of guildCommands.entries()) commands[command.name].id = id;
+
+        // Permission mapping
+        const fullPermissions = Object.entries(commands).map(([_, { id, permissions }]) => ({ id, permissions }));
+        await guild.commands.permissions.set({ fullPermissions });
     });
 
     client.on("interactionCreate", async interaction => {
