@@ -1,49 +1,39 @@
 const Discord = require("discord.js");
+const fs = require("fs");
+
+function importCommands() {
+    const commandFiles = fs.readdirSync("./commands").filter(f => f.endsWith(".js"));
+    let commands = {};
+    for (const file of commandFiles) {
+        const command = require(`../commands/${ file }`);
+        commands[command.data.name] = command;
+    }
+    return commands;
+}
 
 async function run() {
+    let commands = importCommands();
+
     const intents = new Discord.Intents();
-    intents.add('GUILDS', 'GUILD_MESSAGES');
+    intents.add("GUILDS", "GUILD_MESSAGES");
     const client = new Discord.Client({ intents });
 
     client.on("ready", async () => {
         console.log(`Logged in as ${ client.user.tag }!`);
-        const data = [
-            {
-                name: "ping",
-                description: "Replies with Pong!",
-            },
-            {
-                name: "echo",
-                description: "Replies with your input!",
-                options: [{
-                    name: "input",
-                    type: "STRING",
-                    description: "The input to echo back",
-                    required: true,
-                }],
-            },
-        ];
-
-        const guild = await client.guilds.fetch("228404074721181696");
-        await guild.commands.set(data);
+        const guild = await client.guilds.fetch(process.env.GUILD_ID);
+        await guild.commands.set(Object.entries(commands).map(([_, c]) => c.data));
+        console.log(`Registered commands ${ Object.entries(commands).map(([name]) => name) }`)
     });
 
     client.on("interactionCreate", async interaction => {
         if (!interaction.isCommand()) return;
-
-        switch (interaction.commandName.toLowerCase()) {
-            case "ping":
-                await interaction.reply("Pong!");
-                break;
-            case "echo":
-                const input = interaction.options.get("input").value;
-                await interaction.reply(input);
-                break;
-        }
+        const commandName = interaction.commandName.toLowerCase();
+        console.log(`Received interaction "${ commandName }" from "${ interaction.user.username }"`)
+        if (!(commandName in commands)) return;
+        await commands[commandName].handler(interaction);
     });
 
     client.login(process.env.TOKEN).then();
 }
-
 
 module.exports = { run };
