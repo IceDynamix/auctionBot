@@ -23,7 +23,7 @@ function initPlayersTable(db) {
         ) WITHOUT ROWID
     `);
 
-    console.log("Created fresh table");
+    console.log("Created players table");
 
     console.log("Importing players from players.tsv");
     fs.createReadStream("players.tsv")
@@ -40,10 +40,17 @@ function initPlayersTable(db) {
     console.log("Finished importing players from players.tsv")
 }
 
-async function connect() {
-    let db = new sqlite.Database("./database.db");
-    console.log("Connected to database");
+function initBiddersTable(db) {
+    db.run(`
+        CREATE TABLE IF NOT EXISTS bidders
+        (
+            discord_id INTEGER PRIMARY KEY,
+            currency   TEXT DEFAULT 0
+        ) WITHOUT ROWID
+    `);
+}
 
+async function init(db) {
     let playerTableExists = await db.get(`
         SELECT name
         FROM sqlite_master
@@ -51,6 +58,15 @@ async function connect() {
           AND name = 'players';`) !== undefined;
 
     if (!playerTableExists) initPlayersTable(db);
+    initBiddersTable(db);
+}
+
+async function connect() {
+    let db = new sqlite.Database("./database.db");
+    console.log("Connected to database");
+
+    await init(db);
+
     return db;
 }
 

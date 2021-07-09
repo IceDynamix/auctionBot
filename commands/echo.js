@@ -9,7 +9,7 @@ module.exports = {
             required: true,
         }],
     },
-    handler: async interaction => {
+    handler: async (interaction, _) => {
         const input = interaction.options.get("input").value;
         await interaction.reply(input);
     },

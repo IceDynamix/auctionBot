@@ -3,33 +3,34 @@ const fs = require("fs");
 
 function importCommands() {
     const commandFiles = fs.readdirSync("./commands").filter(f => f.endsWith(".js"));
-    let commands = {};
+    let commands = new Discord.Collection;
     for (const file of commandFiles) {
         const command = require(`../commands/${ file }`);
-        commands[command.data.name] = command;
+        commands.set(command.data.name, command);
     }
     return commands;
 }
 
-async function run() {
+async function run(db) {
     let commands = importCommands();
 
     const intents = new Discord.Intents();
-    intents.add("GUILDS", "GUILD_MESSAGES");
+    intents.add("GUILDS", "GUILD_MESSAGES", "GUILD_MEMBERS");
     const client = new Discord.Client({ intents });
 
     client.on("ready", async () => {
         console.log(`Logged in as ${ client.user.tag }!`);
 
         const guild = await client.guilds.fetch(process.env.GUILD_ID);
-        const guildCommands = await guild.commands.set(Object.entries(commands).map(([_, c]) => c.data));
-        console.log(`Registered commands ${ Object.entries(commands).map(([name]) => name) }`);
+        const guildCommands = await guild.commands.set(commands.map(c => c.data));
+        console.log(`Registered commands ${ commands.map((_, name) => name) }`);
 
         // Add IDs to commands dict
-        for (const [id, command] of guildCommands.entries()) commands[command.name].id = id;
+        for (const [id, command] of guildCommands.entries())
+            commands.get(command.name).id = id;
 
         // Permission mapping
-        const fullPermissions = Object.entries(commands).map(([_, { id, permissions }]) => ({ id, permissions }));
+        const fullPermissions = commands.map(({ id, permissions }) => ({ id, permissions }));
         await guild.commands.permissions.set({ fullPermissions });
     });
 
@@ -37,8 +38,7 @@ async function run() {
         if (!interaction.isCommand()) return;
         const commandName = interaction.commandName.toLowerCase();
         console.log(`Received interaction "${ commandName }" from "${ interaction.user.username }"`)
-        if (!(commandName in commands)) return;
-        await commands[commandName].handler(interaction);
+        await commands.get(commandName).handler(interaction, db);
     });
 
     client.login(process.env.TOKEN).then();
