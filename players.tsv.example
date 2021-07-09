@@ -1,13 +1,6 @@
-user_id	username	country	rank	badges	badge_ranks	bws	tier	flag	url	image
-10505107	Kron05	US	12492	"Azu's Tourneys: owo vs uwu Winning Team
-5 Digit Autumn Cup Winning Team
-Five Digit Feuds II Winning Team
-pls enjoy tournament 2019 Winning Team (10k-50k)
-osu! Players Choice Tournament 2 Winner (Tier 3)
-Project Rekindling Summer 2018 55k-80k Winner"	5000,10000,10000,10000,15000,55000	3995	2	https://osu.ppy.sh/images/flags/US.png	https://osu.ppy.sh/users/10505107	https://a.ppy.sh/10505107?.png
-8059468	savilju	FI	2923	osu!RunnerUps! Winter 2019 2v2 Winning Team	25000	2865	1	https://osu.ppy.sh/images/flags/FI.png	https://osu.ppy.sh/users/8059468	https://a.ppy.sh/8059468?.png
-6843383	YoshiLover456	US	21530	"pls enjoy tournament 2019 Winning Team (10k-50k)
-Enigmatic Snow Festival 2019 Tier 2 Winning Team
-osu! Tandem Tournament 3 (#10000 - #25000) Winning Team
-Cindelluna's Winter Tour 2019 Winner (#20000 - #34999)"	10000,10000,10000,20000	14531	2	https://osu.ppy.sh/images/flags/US.png	https://osu.ppy.sh/users/6843383	https://a.ppy.sh/6843383?.png
-13720351	Mecha	US	17323			17323	3	https://osu.ppy.sh/images/flags/US.png	https://osu.ppy.sh/users/13720351	https://a.ppy.sh/13720351?.png
+user_id	username	country	rank	badges	badge_ranks	bws	tier	flag	url	image	qualifier_seed
+12408961	ChomikBox	PL	79			79	1	https://osu.ppy.sh/images/flags/PL.png	https://osu.ppy.sh/users/12408961	https://a.ppy.sh/12408961?.png	1
+8335950	Reedkatt	SE	105	"osu! Swedish Draft Cup Winning Team
+osu! Sweden Cup 2020 Winner
+osu! Sweden Cup 2019 Winner"	1,1,1	35.99536239	1	https://osu.ppy.sh/images/flags/SE.png	https://osu.ppy.sh/users/8335950	https://a.ppy.sh/8335950?.png	2
+9313951	Dragbit 3	HK	144	osu! Bauhinia Cup 2021 Winning Team	1	124.9031889	1	https://osu.ppy.sh/images/flags/HK.png	https://osu.ppy.sh/users/9313951	https://a.ppy.sh/9313951?.png	3
