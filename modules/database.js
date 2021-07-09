@@ -44,7 +44,7 @@ function initBiddersTable(db) {
         CREATE TABLE IF NOT EXISTS bidders
         (
             discord_id INTEGER PRIMARY KEY,
-            currency   TEXT DEFAULT 0
+            balance   TEXT DEFAULT 0
         ) WITHOUT ROWID
     `);
 }
@@ -56,9 +56,9 @@ function initBidsTable(db) {
             bid_id       INTEGER PRIMARY KEY,
             player_id    INTEGER,
             final_bidder TEXT,
-            currency     INTEGER DEFAULT 0,
+            sale_value   INTEGER DEFAULT 0,
             start_time   TEXT,
-            end_time     TEXT
+            ongoing      BOOLEAN
         )
     `);
 }

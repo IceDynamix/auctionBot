@@ -1,7 +1,7 @@
 module.exports = {
     data: {
-        name: "setcurrency",
-        description: "Sets the currency for a single user",
+        name: "setbalance",
+        description: "Sets the balance for a single user",
         defaultPermission: false,
         options: [{
             name: "amount",
