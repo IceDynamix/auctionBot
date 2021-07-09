@@ -23,8 +23,8 @@ module.exports = {
         }
         const amount = interaction.options.get("amount").value;
 
-        db.run(`REPLACE INTO bidders (discord_id, currency)
-                VALUES (${ member.id }, ${ amount })`)
+        db.run(`REPLACE INTO bidders (discord_id, balance)
+                VALUES ('${ member.id }', ${ amount })`)
 
         await interaction.reply(`Set currency of ${ member.displayName } to ${ amount }`);
     },
