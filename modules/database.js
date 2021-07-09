@@ -41,8 +41,8 @@ function initBiddersTable(db) {
     db.run(`
         CREATE TABLE IF NOT EXISTS bidders
         (
-            discord_id INTEGER PRIMARY KEY,
-            balance   TEXT DEFAULT 0
+            discord_id TEXT PRIMARY KEY,
+            balance    INTEGER DEFAULT 0
         ) WITHOUT ROWID
     `);
 }
