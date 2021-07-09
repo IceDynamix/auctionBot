@@ -28,13 +28,11 @@ function initPlayersTable(db) {
     fs.createReadStream("players.tsv")
         .pipe(parse({ delimiter: "\t" }))
         .on("data", data => {
-            db.run(
-                `
-                    INSERT INTO players (user_id, username, country, rank, badges, badge_ranks, bws, tier, flag,
-                                         url,
-                                         image)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                `, data);
+            db.run(`
+                INSERT INTO players (user_id, username, country, rank, badges, badge_ranks, bws, tier, flag,
+                                     url, image, qualifier_seed)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            `, data);
         });
     console.log("Finished importing players from players.tsv")
 }
@@ -61,6 +59,10 @@ function initBidsTable(db) {
             ongoing      BOOLEAN
         )
     `);
+
+    db.run(`DELETE
+            FROM bids
+            WHERE ongoing = TRUE`);
 }
 
 async function init(db) {

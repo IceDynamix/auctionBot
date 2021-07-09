@@ -80,8 +80,8 @@ function initCollector(interaction, db, player) {
         if (!checkBid(bidValue, bidInteraction, balance, teamMembers, saleValue)) return;
 
         saleValue = bidValue;
-        lastBidder = interaction.user.id;
-        bidInteraction.reply(`${ interaction.member.displayName } bids ${ bidValue }.`);
+        lastBidder = bidInteraction.user.id;
+        bidInteraction.reply(`${ bidInteraction.member.displayName } bids ${ bidValue }.`);
 
         if (bidValue === maxBid) collector.stop();
         collector.resetTimer({ time: idleTimer });
@@ -114,6 +114,49 @@ function initCollector(interaction, db, player) {
     });
 }
 
+function generatePlayerCard(player) {
+    const badges = player.badges.split("\n").map((e, i) => [e.trim(), player.badge_ranks.split(",")[i].trim()]);
+    return {
+        "content": "Bidding has started! Use `/bid <amount>` to start placing a bid.",
+        "embeds": [
+            {
+                "color": 5814783,
+                "fields": [
+                    {
+                        "name": "Qual. Seed",
+                        "value": `#${ player.qualifier_seed }`,
+                        "inline": true,
+                    },
+                    {
+                        "name": "Rank",
+                        "value": `#${ player.rank }`,
+                        "inline": true,
+                    },
+                    {
+                        "name": "BWS",
+                        "value": `#${ Math.ceiling(player.bws) }`,
+                        "inline": true,
+                    },
+                    {
+                        "name": `Badges (${ badges.length })`,
+                        "value": badges.filter(([_, rank]) => rank)
+                            .map(([name, rank]) => `(#${ rank }) ${ name }`)
+                            .join("\n"),
+                    },
+                ],
+                "author": {
+                    "name": player.username,
+                    "url": player.url,
+                    "icon_url": player.image,
+                },
+                "footer": {
+                    "text": "Rank is from end of signups",
+                },
+            },
+        ],
+    };
+}
+
 module.exports = {
     data: {
         name: "newsale",
@@ -137,6 +180,7 @@ module.exports = {
             SELECT *
             FROM players
             WHERE user_id NOT IN (SELECT player_id FROM bids)
+              AND qualifier_seed > 0
             ORDER BY RANDOM()
             LIMIT 1;`,
         );
@@ -149,11 +193,10 @@ module.exports = {
         // create bid
         await db.run(`
             INSERT INTO bids (player_id, sale_value, ongoing, start_time)
-            VALUES (?, 100, TRUE, datetime('now'))
+            VALUES (?, 0, TRUE, datetime('now'))
         `, player.user_id)
 
-        // TODO player embed
-        interaction.reply(player.username)
+        interaction.reply(generatePlayerCard(player))
 
         initCollector(interaction, db, player);
     },
