@@ -1,4 +1,5 @@
-const sqlite = require("sqlite3");
+const sqlite3 = require("sqlite3");
+const { open } = require("sqlite");
 const parse = require("csv-parse");
 const fs = require("fs");
 
@@ -62,23 +63,23 @@ function initBidsTable(db) {
     `);
 }
 
-function init(db) {
-    db.get(`
+async function init(db) {
+    const playersTable = await db.get(`
         SELECT name
         FROM sqlite_master
         WHERE type = 'table'
-          AND name = 'players';`, (err, row) => {
-        if (!row) initPlayersTable(db);
-    });
+          AND name = 'players';`);
+
+    if (!playersTable) initPlayersTable(db);
 
     initBiddersTable(db);
     initBidsTable(db);
 }
 
 async function connect() {
-    let db = new sqlite.Database("./database.db");
+    let db = await open({ filename: "./database.db", driver: sqlite3.Database });
     console.log("Connected to database");
-    init(db);
+    await init(db);
     return db;
 }
 

@@ -5,20 +5,15 @@ module.exports = {
         defaultPermission: false,
     },
     handler: async (interaction, db) => {
-        db.get(`
+        const row = await db.get(`
                     SELECT currency
                     FROM bidders
                     WHERE discord_id = ?`,
             interaction.user.id,
-            (err, row) => {
-                if (err) {
-                    console.error(err);
-                    return
-                }
-                const content = row ? `Current balance: ${ row.currency }` : "No currency set, please ping an admin to set your currency";
-                interaction.reply({ content, ephemeral: true });
-            },
         );
+
+        const content = row ? `Current balance: ${ row.currency }` : "No currency set, please ping an admin to set your currency";
+        interaction.reply({ content, ephemeral: true });
     },
     permissions: [
         {
