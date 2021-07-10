@@ -38,7 +38,23 @@ async function run(db) {
         if (!interaction.isCommand()) return;
         const commandName = interaction.commandName.toLowerCase();
         console.log(`Received interaction "${ commandName }" from "${ interaction.user.username }"`)
-        await commands.get(commandName).handler(interaction, db);
+        try {
+            await commands.get(commandName).handler(interaction, db);
+        } catch (e) {
+            console.error(e);
+            try {
+                await interaction.reply({
+                    content: `Something went wrong while executing this command!\n\`${ e }\``,
+                    ephemeral: true,
+                });
+            } catch (e) {
+                // interaction has already been replied to
+                await interaction.followUp({
+                    content: `Something went wrong while executing this command!\n\`${ e }\``,
+                    ephemeral: true,
+                });
+            }
+        }
     });
 
     client.login(process.env.TOKEN).then();
