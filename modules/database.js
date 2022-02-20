@@ -31,6 +31,8 @@ async function initPlayersTable(db) {
     fs.createReadStream("players.tsv")
         .pipe(parse({ delimiter: "\t" }))
         .on("data", data => {
+            // skip the header row lol
+            if(data[0] == 'user_id') return;
             const p = db.run(`
                 INSERT INTO players (user_id, username, country, rank, badges, badge_ranks, bws, tier, flag,
                                      url, image, qualifier_seed)
