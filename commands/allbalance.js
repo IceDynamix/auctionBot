@@ -10,7 +10,7 @@ module.exports = {
             FROM bidders`,
         );
 
-        if (!rows) interaction.reply({ content: "No bidder has currency!", ephemeral: true });
+        if (!rows.length) interaction.reply({ content: "No bidder has currency!", ephemeral: true });
         else {
             const output = [];
             await interaction.guild.members.fetch();

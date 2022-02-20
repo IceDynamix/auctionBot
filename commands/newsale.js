@@ -134,7 +134,7 @@ function generatePlayerCard(player) {
                     },
                     {
                         "name": "BWS",
-                        "value": `#${ Math.ceiling(player.bws) }`,
+                        "value": `#${ Math.ceil(player.bws) }`,
                         "inline": true,
                     },
                     {

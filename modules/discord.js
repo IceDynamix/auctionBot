@@ -57,7 +57,8 @@ async function run(db) {
         }
     });
 
-    client.login(process.env.TOKEN).then();
+    await client.login(process.env.TOKEN);
+    return client;
 }
 
 module.exports = { run };
