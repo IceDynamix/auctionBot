@@ -1,6 +1,6 @@
 const sqlite3 = require("sqlite3");
 const { open } = require("sqlite");
-const parse = require("csv-parse");
+const { parse } = require("csv-parse");
 const fs = require("fs");
 
 async function initPlayersTable(db) {
