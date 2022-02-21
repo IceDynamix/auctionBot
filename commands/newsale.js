@@ -1,13 +1,10 @@
 const Discord = require("discord.js")
-const { ADMIN_ROLE_ID } = require('../modules/config');
+const { ADMIN_ROLE_ID, MIN_INCREMENT, INITIAL_TIMER, IDLE_TIMER, MAX_BID } = require('../modules/config');
 
-function checkBid(bidValue, bidInteraction, balance, teamMembers, saleValue, maxBid) {
-    // TODO extract constants
-    const minIncrement = 100;
-
-    if (bidValue > maxBid) {
+function checkBid(bidValue, bidInteraction, balance, teamMembers, saleValue) {
+    if (bidValue > MAX_BID) {
         bidInteraction.reply({
-            content: `You're only allowed to bid up to a maximum of ${ maxBid } in an auction! Bid 9000 exactly in case you want to buy the player instantly.`,
+            content: `You're only allowed to bid up to a maximum of ${ MAX_BID } in an auction! Bid ${ MAX_BID } exactly in case you want to buy the player instantly.`,
             ephemeral: true,
         });
         return false;
@@ -29,17 +26,17 @@ function checkBid(bidValue, bidInteraction, balance, teamMembers, saleValue, max
         return false;
     }
 
-    if (bidValue < saleValue + minIncrement) {
+    if (bidValue < saleValue + MIN_INCREMENT) {
         bidInteraction.reply({
-            content: `You have to bid at least ${ saleValue + minIncrement } or higher!`,
+            content: `You have to bid at least ${ saleValue + MIN_INCREMENT } or higher!`,
             ephemeral: true,
         });
         return false;
     }
 
-    if (bidValue % minIncrement !== 0) {
+    if (bidValue % MIN_INCREMENT !== 0) {
         bidInteraction.reply({
-            content: `The bid was not an increment of ${ minIncrement }!`,
+            content: `The bid was not an increment of ${ MIN_INCREMENT }!`,
             ephemeral: true,
         });
         return false;
@@ -49,17 +46,12 @@ function checkBid(bidValue, bidInteraction, balance, teamMembers, saleValue, max
 }
 
 function initCollector(interaction, db, player) {
-    // TODO extract constants
-    const initialTimer = 20000;
-    const idleTimer = 15000;
-    const maxBid = 9000;
-
-    let saleValue = 100;
+    let saleValue = MIN_INCREMENT;
     let lastBidder = null;
 
     const collector = new Discord.InteractionCollector(interaction.client, {
         channel: interaction.channel,
-        time: initialTimer,
+        time: INITIAL_TIMER,
     });
 
     collector.on("collect", async bidInteraction => {
@@ -84,8 +76,8 @@ function initCollector(interaction, db, player) {
         lastBidder = bidInteraction.user.id;
         bidInteraction.reply(`${ bidInteraction.member.displayName } bids ${ bidValue }.`);
 
-        if (bidValue === maxBid) collector.stop();
-        collector.resetTimer({ time: idleTimer });
+        if (bidValue === MAX_BID) collector.stop();
+        collector.resetTimer({ time: IDLE_TIMER });
     });
 
     collector.on("end", async () => {
