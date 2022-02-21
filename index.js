@@ -1,4 +1,4 @@
-require("dotenv").config();
+require('./modules/config');
 const database = require("./modules/database");
 const bot = require("./modules/discord");
 

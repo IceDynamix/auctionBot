@@ -1,3 +1,5 @@
+const { ADMIN_ROLE_ID, BIDDER_ROLE_ID } = require('../modules/config');
+
 module.exports = {
     data: {
         name: "setbalance",
@@ -17,7 +19,7 @@ module.exports = {
     },
     handler: async (interaction, db) => {
         const { member } = interaction.options.get("user");
-        if (!member.roles.cache.get(process.env.BIDDER_ROLE_ID)) {
+        if (!member.roles.cache.get(BIDDER_ROLE_ID)) {
             await interaction.reply("Mentioned user is not a bidder!");
             return;
         }
@@ -30,7 +32,7 @@ module.exports = {
     },
     permissions: [
         {
-            id: process.env.ADMIN_ROLE_ID,
+            id: ADMIN_ROLE_ID,
             type: "ROLE",
             permission: true,
         },

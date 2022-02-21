@@ -1,3 +1,5 @@
+const { ADMIN_ROLE_ID } = require('../modules/config');
+
 module.exports = {
     data: {
         name: "echo",
@@ -15,7 +17,7 @@ module.exports = {
     },
     permissions: [
         {
-            id: process.env.ADMIN_ROLE_ID,
+            id: ADMIN_ROLE_ID,
             type: "ROLE",
             permission: true,
         },

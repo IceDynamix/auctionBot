@@ -1,4 +1,5 @@
 const Discord = require("discord.js")
+const { ADMIN_ROLE_ID } = require('../modules/config');
 
 function checkBid(bidValue, bidInteraction, balance, teamMembers, saleValue, maxBid) {
     // TODO extract constants
@@ -202,7 +203,7 @@ module.exports = {
     },
     permissions: [
         {
-            id: process.env.ADMIN_ROLE_ID,
+            id: ADMIN_ROLE_ID,
             type: "ROLE",
             permission: true,
         },
