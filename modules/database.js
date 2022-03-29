@@ -26,7 +26,7 @@ async function initPlayersTable(db) {
 
     console.log("Importing players from players.tsv");
 
-    const promisisArray = [];
+    const promisesArray = [];
 
     fs.createReadStream("players.tsv")
         .pipe(parse({ delimiter: "\t" }))
@@ -38,10 +38,10 @@ async function initPlayersTable(db) {
                                      url, image, qualifier_seed)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             `, data);
-            promisisArray.push(p);
+            promisesArray.push(p);
         });
 
-    await Promise.all(promisisArray);
+    await Promise.all(promisesArray);
     console.log("Finished importing players from players.tsv")
 }
 
