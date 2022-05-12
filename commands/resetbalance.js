@@ -1,3 +1,5 @@
+const { ADMIN_ROLE_ID, BIDDER_ROLE_ID } = require('../modules/config');
+
 module.exports = {
     data: {
         name: "resetbalance",
@@ -12,7 +14,7 @@ module.exports = {
     },
     handler: async (interaction, db) => {
         await interaction.guild.members.fetch();
-        const bidders = interaction.guild.roles.cache.get(process.env.BIDDER_ROLE_ID).members.map(m => m.id);
+        const bidders = interaction.guild.roles.cache.get(BIDDER_ROLE_ID).members.map(m => m.id);
 
         db.run(`DELETE
                 FROM bidders`);
@@ -25,7 +27,7 @@ module.exports = {
     },
     permissions: [
         {
-            id: process.env.ADMIN_ROLE_ID,
+            id: ADMIN_ROLE_ID,
             type: "ROLE",
             permission: true,
         },

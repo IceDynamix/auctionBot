@@ -9,9 +9,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "csv-parse": "^4.16.0",
-    "discord.js": "^13.0.0-dev.9cd5e7e.1625745789",
-    "dotenv": "^10.0.0",
+    "csv-parse": "^5.0.4",
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
     "sqlite": "^4.0.23",
     "sqlite3": "^5.0.2"
   }

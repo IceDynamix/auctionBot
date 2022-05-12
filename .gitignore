@@ -1,5 +1,5 @@
-./database.db
-./players.tsv
+database.db
+players.tsv
 .idea
 
 # Logs

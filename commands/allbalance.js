@@ -1,3 +1,5 @@
+const { ADMIN_ROLE_ID } = require('../modules/config');
+
 module.exports = {
     data: {
         name: "allbalance",
@@ -10,7 +12,7 @@ module.exports = {
             FROM bidders`,
         );
 
-        if (!rows) interaction.reply({ content: "No bidder has currency!", ephemeral: true });
+        if (!rows.length) interaction.reply({ content: "No bidder has currency!", ephemeral: true });
         else {
             const output = [];
             await interaction.guild.members.fetch();
@@ -23,7 +25,7 @@ module.exports = {
     },
     permissions: [
         {
-            id: process.env.ADMIN_ROLE_ID,
+            id: ADMIN_ROLE_ID,
             type: "ROLE",
             permission: true,
         },

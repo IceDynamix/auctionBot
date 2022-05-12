@@ -1,3 +1,5 @@
+const { BIDDER_ROLE_ID } = require('../modules/config');
+
 module.exports = {
     data: {
         name: "bid",
@@ -16,7 +18,7 @@ module.exports = {
     },
     permissions: [
         {
-            id: process.env.BIDDER_ROLE_ID,
+            id: BIDDER_ROLE_ID,
             type: "ROLE",
             permission: true,
         },

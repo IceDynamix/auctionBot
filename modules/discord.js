@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const fs = require("fs");
+const { TOKEN, GUILD_ID } = require('./config');
 
 function importCommands() {
     const commandFiles = fs.readdirSync("./commands").filter(f => f.endsWith(".js"));
@@ -21,7 +22,7 @@ async function run(db) {
     client.on("ready", async () => {
         console.log(`Logged in as ${ client.user.tag }!`);
 
-        const guild = await client.guilds.fetch(process.env.GUILD_ID);
+        const guild = await client.guilds.fetch(GUILD_ID);
         const guildCommands = await guild.commands.set(commands.map(c => c.data));
         console.log(`Registered commands ${ commands.map((_, name) => name) }`);
 
@@ -57,7 +58,8 @@ async function run(db) {
         }
     });
 
-    client.login(process.env.TOKEN).then();
+    await client.login(TOKEN);
+    return client;
 }
 
 module.exports = { run };
