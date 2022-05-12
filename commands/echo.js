@@ -14,12 +14,5 @@ module.exports = {
     handler: async (interaction, _) => {
         const input = interaction.options.get("input").value;
         await interaction.reply(input);
-    },
-    permissions: [
-        {
-            id: ADMIN_ROLE_ID,
-            type: "ROLE",
-            permission: true,
-        },
-    ],
+    }
 }

@@ -4,7 +4,6 @@ module.exports = {
     data: {
         name: "bid",
         description: "Bid on the currently auctioned player!",
-        defaultPermission: false,
         options: [{
             name: "amount",
             type: "INTEGER",
@@ -16,11 +15,4 @@ module.exports = {
         // Logic is handled in newsale.js via an InteractionCollector
         // TODO find a way for bid not to do anything unless an auction is active
     },
-    permissions: [
-        {
-            id: BIDDER_ROLE_ID,
-            type: "ROLE",
-            permission: true,
-        },
-    ],
 }

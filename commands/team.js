@@ -4,7 +4,6 @@ module.exports = {
     data: {
         name: "team",
         description: "View your team",
-        defaultPermission: false,
     },
     handler: async (interaction, db) => {
         const rows = await db.all(`
@@ -22,12 +21,4 @@ module.exports = {
 
         interaction.reply({ content: rows.map(p => `${p.username} ($${p.sale_value})`).join("\n") })
     }
-    ,
-    permissions: [
-        {
-            id: BIDDER_ROLE_ID,
-            type: "ROLE",
-            permission: true,
-        },
-    ],
 }

@@ -29,10 +29,6 @@ async function run(db) {
         // Add IDs to commands dict
         for (const [id, command] of guildCommands.entries())
             commands.get(command.name).id = id;
-
-        // Permission mapping
-        const fullPermissions = commands.map(({ id, permissions }) => ({ id, permissions }));
-        await guild.commands.permissions.set({ fullPermissions });
     });
 
     client.on("interactionCreate", async interaction => {
@@ -40,7 +36,8 @@ async function run(db) {
         const commandName = interaction.commandName.toLowerCase();
         console.log(`Received interaction "${commandName}" from "${interaction.user.username}"`)
         try {
-            await commands.get(commandName).handler(interaction, db);
+            const command = commands.get(commandName);
+            await command.handler(interaction, db);
         } catch (e) {
             console.error(e);
             try {

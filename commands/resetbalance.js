@@ -4,7 +4,6 @@ module.exports = {
     data: {
         name: "resetbalance",
         description: "Sets all bidders balance",
-        defaultPermission: false,
         options: [{
             name: "amount",
             type: "INTEGER",
@@ -24,12 +23,5 @@ module.exports = {
                 VALUES ${bidders.map(id => `(${id}, ${amount})`).join(",")}`)
 
         interaction.reply(`Set all bidders balance to ${amount}`);
-    },
-    permissions: [
-        {
-            id: ADMIN_ROLE_ID,
-            type: "ROLE",
-            permission: true,
-        },
-    ],
+    }
 }

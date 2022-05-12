@@ -154,7 +154,6 @@ module.exports = {
     data: {
         name: "newsale",
         description: "Create a new sale",
-        defaultPermission: false,
     },
     handler: async (interaction, db) => {
         const ongoing = await db.get(`
@@ -192,12 +191,5 @@ module.exports = {
         interaction.reply(generatePlayerCard(player))
 
         initCollector(interaction, db, player);
-    },
-    permissions: [
-        {
-            id: ADMIN_ROLE_ID,
-            type: "ROLE",
-            permission: true,
-        },
-    ],
+    }
 }

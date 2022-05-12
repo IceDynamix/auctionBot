@@ -4,7 +4,6 @@ module.exports = {
     data: {
         name: "setbalance",
         description: "Sets the balance for a single user",
-        defaultPermission: false,
         options: [{
             name: "amount",
             type: "INTEGER",
@@ -29,12 +28,5 @@ module.exports = {
                 VALUES ('${member.id}', ${amount})`)
 
         await interaction.reply(`Set currency of ${member.displayName} to ${amount}`);
-    },
-    permissions: [
-        {
-            id: ADMIN_ROLE_ID,
-            type: "ROLE",
-            permission: true,
-        },
-    ],
+    }
 }

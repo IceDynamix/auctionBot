@@ -4,7 +4,6 @@ module.exports = {
     data: {
         name: "allteams",
         description: "Check every bidders team",
-        defaultPermission: false,
     },
     handler: async (interaction, db) => {
         const rows = await db.all(`
@@ -32,12 +31,5 @@ module.exports = {
             }
             interaction.reply({ content: output.join("\n") });
         }
-    },
-    permissions: [
-        {
-            id: ADMIN_ROLE_ID,
-            type: "ROLE",
-            permission: true,
-        },
-    ],
+    }
 }

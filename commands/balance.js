@@ -4,7 +4,6 @@ module.exports = {
     data: {
         name: "balance",
         description: "Check your current balance",
-        defaultPermission: false,
     },
     handler: async (interaction, db) => {
         const row = await db.get(`
@@ -17,11 +16,4 @@ module.exports = {
         const content = row ? `Current balance: ${row.balance}` : "No currency set, please ping an admin to set your currency";
         interaction.reply({ content, ephemeral: true });
     },
-    permissions: [
-        {
-            id: BIDDER_ROLE_ID,
-            type: "ROLE",
-            permission: true,
-        },
-    ],
 }
