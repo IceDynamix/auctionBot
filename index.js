@@ -17,10 +17,10 @@ process.on('SIGINT', () => process.emit('requestShutdown'));
 process.once('requestShutdown', async () => {
     process.on('requestShutdown', () => console.log(`process ${process.pid} already shutting down...`));
     console.log('shutting down...');
-    if(discordClient) {
+    if (discordClient) {
         discordClient.destroy();
     }
-    if(db) {
+    if (db) {
         await db.close();
     }
     console.log('Shutdown complete');

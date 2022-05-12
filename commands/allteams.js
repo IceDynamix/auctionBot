@@ -23,12 +23,12 @@ module.exports = {
                     FROM bids b,
                          players p
                     WHERE b.player_id = p.user_id
-                      AND b.final_bidder = '${ member.id }';
+                      AND b.final_bidder = '${member.id}';
                 `);
                 if (teamMembers.length)
-                    output.push(`${ member.displayName } | ${ teamMembers.map(p => p.username).join(", ") }`);
+                    output.push(`${member.displayName} | ${teamMembers.map(p => p.username).join(", ")}`);
                 else
-                    output.push(`${ member.displayName } | -`);
+                    output.push(`${member.displayName} | -`);
             }
             interaction.reply({ content: output.join("\n") });
         }

@@ -21,9 +21,9 @@ module.exports = {
 
         const amount = interaction.options.get("amount").value;
         db.run(`INSERT INTO bidders (discord_id, balance)
-                VALUES ${ bidders.map(id => `(${ id }, ${ amount })`).join(",") }`)
+                VALUES ${bidders.map(id => `(${id}, ${amount})`).join(",")}`)
 
-        interaction.reply(`Set all bidders balance to ${ amount }`);
+        interaction.reply(`Set all bidders balance to ${amount}`);
     },
     permissions: [
         {

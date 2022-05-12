@@ -18,7 +18,7 @@ module.exports = {
             await interaction.guild.members.fetch();
             for (const r of rows) {
                 const member = interaction.guild.members.cache.get(r.discord_id);
-                output.push(`${ member.displayName } ($${ r.balance })`);
+                output.push(`${member.displayName} ($${r.balance})`);
             }
             interaction.reply({ content: output.join("\n") });
         }

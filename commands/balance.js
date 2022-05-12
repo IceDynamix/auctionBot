@@ -14,7 +14,7 @@ module.exports = {
             interaction.user.id,
         );
 
-        const content = row ? `Current balance: ${ row.balance }` : "No currency set, please ping an admin to set your currency";
+        const content = row ? `Current balance: ${row.balance}` : "No currency set, please ping an admin to set your currency";
         interaction.reply({ content, ephemeral: true });
     },
     permissions: [

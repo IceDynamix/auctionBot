@@ -2,7 +2,7 @@ require("dotenv").config();
 
 function parseIntOrThrow(str) {
     const i = parseInt(str);
-    if(isNaN(i)) throw new Error(`${str} is not a number`);
+    if (isNaN(i)) throw new Error(`${str} is not a number`);
     return i;
 }
 

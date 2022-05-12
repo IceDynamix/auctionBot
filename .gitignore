@@ -1,6 +1,8 @@
 database.db
 players.tsv
 .idea
+.env*
+!.env.example
 
 # Logs
 logs

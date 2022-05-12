@@ -12,7 +12,7 @@ module.exports = {
             FROM players p,
                  bids b
             WHERE p.user_id = b.player_id
-              AND b.final_bidder = '${ interaction.user.id }';`,
+              AND b.final_bidder = '${interaction.user.id}';`,
         );
 
         if (!rows.length) {
@@ -20,7 +20,7 @@ module.exports = {
             return;
         }
 
-        interaction.reply({ content: rows.map(p => `${ p.username } ($${ p.sale_value })`).join("\n") })
+        interaction.reply({ content: rows.map(p => `${p.username} ($${p.sale_value})`).join("\n") })
     }
     ,
     permissions: [

@@ -26,9 +26,9 @@ module.exports = {
         const amount = interaction.options.get("amount").value;
 
         db.run(`REPLACE INTO bidders (discord_id, balance)
-                VALUES ('${ member.id }', ${ amount })`)
+                VALUES ('${member.id}', ${amount})`)
 
-        await interaction.reply(`Set currency of ${ member.displayName } to ${ amount }`);
+        await interaction.reply(`Set currency of ${member.displayName} to ${amount}`);
     },
     permissions: [
         {

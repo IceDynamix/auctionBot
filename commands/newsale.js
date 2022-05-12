@@ -4,7 +4,7 @@ const { ADMIN_ROLE_ID, MIN_INCREMENT, INITIAL_TIMER, IDLE_TIMER, MAX_BID } = req
 function checkBid(bidValue, bidInteraction, balance, teamMembers, saleValue) {
     if (bidValue > MAX_BID) {
         bidInteraction.reply({
-            content: `You're only allowed to bid up to a maximum of ${ MAX_BID } in an auction! Bid ${ MAX_BID } exactly in case you want to buy the player instantly.`,
+            content: `You're only allowed to bid up to a maximum of ${MAX_BID} in an auction! Bid ${MAX_BID} exactly in case you want to buy the player instantly.`,
             ephemeral: true,
         });
         return false;
@@ -12,7 +12,7 @@ function checkBid(bidValue, bidInteraction, balance, teamMembers, saleValue) {
 
     if (bidValue > balance) {
         bidInteraction.reply({
-            content: `You cannot bid more money than you currently possess! (${ balance })`,
+            content: `You cannot bid more money than you currently possess! (${balance})`,
             ephemeral: true,
         });
         return false;
@@ -20,7 +20,7 @@ function checkBid(bidValue, bidInteraction, balance, teamMembers, saleValue) {
 
     if (teamMembers.length < 3 && bidValue > balance * 0.75) {
         bidInteraction.reply({
-            content: `You cannot bid more than 75% of your remaining money (${ balance * 0.75 }) until you have at least 3 players!`,
+            content: `You cannot bid more than 75% of your remaining money (${balance * 0.75}) until you have at least 3 players!`,
             ephemeral: true,
         });
         return false;
@@ -28,7 +28,7 @@ function checkBid(bidValue, bidInteraction, balance, teamMembers, saleValue) {
 
     if (bidValue < saleValue + MIN_INCREMENT) {
         bidInteraction.reply({
-            content: `You have to bid at least ${ saleValue + MIN_INCREMENT } or higher!`,
+            content: `You have to bid at least ${saleValue + MIN_INCREMENT} or higher!`,
             ephemeral: true,
         });
         return false;
@@ -36,7 +36,7 @@ function checkBid(bidValue, bidInteraction, balance, teamMembers, saleValue) {
 
     if (bidValue % MIN_INCREMENT !== 0) {
         bidInteraction.reply({
-            content: `The bid was not an increment of ${ MIN_INCREMENT }!`,
+            content: `The bid was not an increment of ${MIN_INCREMENT}!`,
             ephemeral: true,
         });
         return false;
@@ -62,19 +62,19 @@ function initCollector(interaction, db, player) {
         const teamMembers = await db.all(`
             SELECT *
             FROM bids
-            WHERE final_bidder = '${ bidInteraction.user.id }'`,
+            WHERE final_bidder = '${bidInteraction.user.id}'`,
         );
         const { balance } = await db.get(`
             SELECT balance
             FROM bidders
-            WHERE discord_id = '${ bidInteraction.user.id }'
+            WHERE discord_id = '${bidInteraction.user.id}'
         `);
 
         if (!checkBid(bidValue, bidInteraction, balance, teamMembers, saleValue)) return;
 
         saleValue = bidValue;
         lastBidder = bidInteraction.user.id;
-        bidInteraction.reply(`${ bidInteraction.member.displayName } bids ${ bidValue }.`);
+        bidInteraction.reply(`${bidInteraction.member.displayName} bids ${bidValue}.`);
 
         if (bidValue === MAX_BID) collector.stop();
         collector.resetTimer({ time: IDLE_TIMER });
@@ -90,18 +90,18 @@ function initCollector(interaction, db, player) {
             `)
         } else {
             const bidderName = interaction.guild.members.cache.get(lastBidder).displayName;
-            await interaction.followUp(`${ player.username } has been sold to ${ bidderName } for ${ saleValue }`);
+            await interaction.followUp(`${player.username} has been sold to ${bidderName} for ${saleValue}`);
             await db.run(`
                 UPDATE bids
-                SET sale_value   = ${ saleValue },
-                    final_bidder = '${ lastBidder }',
+                SET sale_value   = ${saleValue},
+                    final_bidder = '${lastBidder}',
                     ongoing      = FALSE
                 WHERE ongoing = TRUE;
             `);
             await db.run(`
                 UPDATE bidders
-                SET balance = balance - ${ saleValue }
-                WHERE discord_id = '${ lastBidder }';
+                SET balance = balance - ${saleValue}
+                WHERE discord_id = '${lastBidder}';
             `);
         }
     });
@@ -117,23 +117,23 @@ function generatePlayerCard(player) {
                 "fields": [
                     {
                         "name": "Qual. Seed",
-                        "value": `#${ player.qualifier_seed }`,
+                        "value": `#${player.qualifier_seed}`,
                         "inline": true,
                     },
                     {
                         "name": "Rank",
-                        "value": `#${ player.rank }`,
+                        "value": `#${player.rank}`,
                         "inline": true,
                     },
                     {
                         "name": "BWS",
-                        "value": `#${ Math.ceil(player.bws) }`,
+                        "value": `#${Math.ceil(player.bws)}`,
                         "inline": true,
                     },
                     {
-                        "name": `Badges (${ badges.length })`,
+                        "name": `Badges (${badges.length})`,
                         "value": badges.filter(([_, rank]) => rank)
-                            .map(([name, rank]) => `(#${ rank }) ${ name }`)
+                            .map(([name, rank]) => `(#${rank}) ${name}`)
                             .join("\n"),
                     },
                 ],
