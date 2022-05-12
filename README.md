@@ -5,14 +5,16 @@
 - to be hosted yourself
 - have node and node package manager of your choice installed
 - install dependencies with `npm i`
-- add `.env` file, refer to `.env.example` for what keys to fill
+- get your [bot token](https://discord.com/developers/applications)
+  - set the privileged guild members intent
+- add `.env` file, refer to `.env.example` for what keys to fill (all timer values are in milliseconds)
 - add `players.tsv`, refer to `players.tsv.example` for what columns to use
   - badge names are ; separated, badge ranks are comma separated
 - start the bot with `npm run start`
 
 ## how to operate
 
-- first use `/allbalance` to set an initial balance for every bidder
+- first use `/resetbalance` to set an initial balance for every bidder
 - then run `/newsale` to start a sale for a random person
 - bidders use `/bid <amount>` to bid on a user
 

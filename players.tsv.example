@@ -1,6 +1,4 @@
-user_id	username	country	rank	badges	badge_ranks	bws	tier	flag	url	image	qualifier_seed
-12408961	ChomikBox	PL	79			79	1	https://osu.ppy.sh/images/flags/PL.png	https://osu.ppy.sh/users/12408961	https://a.ppy.sh/12408961?.png	1
-8335950	Reedkatt	SE	105	"osu! Swedish Draft Cup Winning Team
-osu! Sweden Cup 2020 Winner
-osu! Sweden Cup 2019 Winner"	1,1,1	35.99536239	1	https://osu.ppy.sh/images/flags/SE.png	https://osu.ppy.sh/users/8335950	https://a.ppy.sh/8335950?.png	2
-9313951	Dragbit 3	HK	144	osu! Bauhinia Cup 2021 Winning Team	1	124.9031889	1	https://osu.ppy.sh/images/flags/HK.png	https://osu.ppy.sh/users/9313951	https://a.ppy.sh/9313951?.png	3
+user_id	username	country	rank
+12408961	ChomikBox	PL	79
+8335950	Reedkatt	SE	105
+9313951	Dragbit 3	HK	144

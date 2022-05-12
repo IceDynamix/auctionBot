@@ -1,4 +1,4 @@
-database.db
+database.db*
 players.tsv
 .idea
 .env*

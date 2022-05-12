@@ -1,5 +1,5 @@
 const Discord = require("discord.js")
-const { ADMIN_ROLE_ID, MIN_INCREMENT, INITIAL_TIMER, IDLE_TIMER, MAX_BID } = require('../modules/config');
+const { MIN_INCREMENT, INITIAL_TIMER, IDLE_TIMER, MAX_BID } = require('../modules/config');
 
 function checkBid(bidValue, bidInteraction, balance, teamMembers, saleValue) {
     if (bidValue > MAX_BID) {
@@ -108,7 +108,6 @@ function initCollector(interaction, db, player) {
 }
 
 function generatePlayerCard(player) {
-    const badges = player.badges.split("\n").map((e, i) => [e.trim(), player.badge_ranks.split(",")[i].trim()]);
     return {
         "content": "Bidding has started! Use `/bid <amount>` to start placing a bid.",
         "embeds": [
@@ -116,31 +115,20 @@ function generatePlayerCard(player) {
                 "color": 5814783,
                 "fields": [
                     {
-                        "name": "Qual. Seed",
-                        "value": `#${player.qualifier_seed}`,
-                        "inline": true,
-                    },
-                    {
                         "name": "Rank",
                         "value": `#${player.rank}`,
                         "inline": true,
                     },
                     {
-                        "name": "BWS",
-                        "value": `#${Math.ceil(player.bws)}`,
+                        "name": "Country",
+                        "value": `:flag_${player.country.toLowerCase()}:`,
                         "inline": true,
-                    },
-                    {
-                        "name": `Badges (${badges.length})`,
-                        "value": badges.filter(([_, rank]) => rank)
-                            .map(([name, rank]) => `(#${rank}) ${name}`)
-                            .join("\n"),
-                    },
+                    }
                 ],
                 "author": {
                     "name": player.username,
-                    "url": player.url,
-                    "icon_url": player.image,
+                    "url": "https://osu.ppy.sh/users/" + player.user_id,
+                    "icon_url": `https://a.ppy.sh/${player.user_id}?.png`,
                 },
                 "footer": {
                     "text": "Rank is from end of signups",
@@ -172,7 +160,6 @@ module.exports = {
             SELECT *
             FROM players
             WHERE user_id NOT IN (SELECT player_id FROM bids)
-              AND qualifier_seed > 0
             ORDER BY RANDOM()
             LIMIT 1;`,
         );

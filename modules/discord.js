@@ -16,7 +16,7 @@ async function run(db) {
     let commands = importCommands();
 
     const intents = new Discord.Intents();
-    intents.add(Discord.Intents.FLAGS.GUILDS);
+    intents.add(Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MEMBERS);
     const client = new Discord.Client({ intents });
 
     client.on("ready", async () => {
